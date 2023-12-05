@@ -24,12 +24,14 @@ class SnowDown{
 let snows = [];
 let bg1,bd2,oldMan;//image
 let manX; //make man move
-let manDirection = 1;
+let A = "Merry Christmas !";
+let myFont;
 
 function preload(){
     bg1 = loadImage("assets/bg1.jpg");
     oldMan = loadImage("assets/old man.png");
     bg2 = loadImage("assets/bg 2.jpg");
+    myFont = loadFont("assets/new font .ttf")
 }
 function setup(){
     createCanvas(600,600);
@@ -41,12 +43,18 @@ function setup(){
 function draw(){
     image(bg1,width/2,height/2,width,height);
     image(oldMan,manX,560,60,80); 
-    manX -= manDirection; 
-    if(manX <= 30 || manX > width-30){
-        manDirection *=-1;
+    manX -= 1.5; 
+    if(manX +300 <= 0){
+        manX = 600;
     }
-    
-    
+    fill(250,242,209);
+    stroke(248,173,30);
+    strokeWeight(4);
+    textSize(50);
+    textFont(myFont);
+    textAlign(LEFT,CENTER);
+    text(A,manX+60,560);
+
 
     let snowDown = new SnowDown();
     snows.push(snowDown);
@@ -61,7 +69,7 @@ function draw(){
      }
     }
 
-    image(bg2,width/2,height/2,500,400);
+    image(bg2,width/2,height/2,500,400);//blackboard
 
-
+    
 }
