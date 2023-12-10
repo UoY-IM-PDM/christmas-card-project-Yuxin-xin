@@ -25,19 +25,40 @@ let snows = [];
 let bg1,bd2,oldMan;//image
 let manX; //make man move
 let A = "Merry Christmas !";
-let myFont;
+let myFont,mySound;
+let penPicker,sizeSlider,clearButton;
 
 function preload(){
     bg1 = loadImage("assets/bg1.jpg");
     oldMan = loadImage("assets/old man.png");
     bg2 = loadImage("assets/bg 2.jpg");
-    myFont = loadFont("assets/new font .ttf")
+    myFont = loadFont("assets/new font .ttf");
+    
 }
 function setup(){
     createCanvas(600,600);
-    noStroke();
     imageMode(CENTER);
     manX = random(30,width-30); //oldman 随机出现
+
+    clearButton = createButton("clear");//draw christmas tree
+    penPicker = createColorPicker(0);
+    sizeSlider = createSlider(5,50,20);
+
+    const Container = select("main");
+
+    clearButton.parent(Container);
+    penPicker.parent(Container);
+    sizeSlider.parent(Container);
+
+    penPicker.position(70,490);
+    
+    sizeSlider.size(150,50)
+    sizeSlider.position(250,480);
+
+    clearButton.size(width/8,30)
+    clearButton.position(480,490);
+    clearButton.mousePressed(clear);
+    noStroke();
 }
 
 function draw(){
@@ -68,8 +89,18 @@ function draw(){
         snows.splice(i,1);
      }
     }
-
-    image(bg2,width/2,height/2,500,400);//blackboard
-
     
+    //image(bg2,width/2,height/2,500,400);//blackboard
+    fill(255);
+    rectMode(CENTER);
+    rect(width/2,height/2,500,400);
+    if (mouseIsPressed) {
+        if (mouseX > width/2 - 250/2 && mouseX < width/2 + 250/2 &&
+            mouseY > height/2 - 400/2 && mouseY < height/2 + 400/2) {
+            console.log("Drawing circle at: " + mouseX + ", " + mouseY);
+            fill(penPicker.value());
+            circle(mouseX, mouseY, sizeSlider.value());
+        }
+    }
+
 }
