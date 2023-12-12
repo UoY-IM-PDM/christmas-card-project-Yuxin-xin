@@ -25,6 +25,8 @@ let snows = [];
 let bg1,bd2,oldMan;//image
 let manX; //make man move
 let A = "Merry Christmas !";
+let W = "Draw you own Christmas tree !";
+let wordX;
 let myFont,mySound;
 let penPicker,sizeSlider,clearButton;
 
@@ -39,6 +41,7 @@ function setup(){
     createCanvas(600,600);
     imageMode(CENTER);
     manX = random(30,width-30); //oldman 随机出现
+    wordX = random(50,width-50);
 
     clearButton = createButton("clear");//draw christmas tree
     penPicker = createColorPicker(0);
@@ -75,6 +78,18 @@ function draw(){
     textFont(myFont);
     textAlign(LEFT,CENTER);
     text(A,manX+60,560);
+    
+    fill(250,242,209);
+    stroke(248,173,30);
+    strokeWeight(4);
+    textSize(30);
+    textFont(myFont);
+    textAlign(LEFT,CENTER);
+    text(W,wordX,75);
+    wordX -= 1.5;
+    if(wordX+200<=0){
+        wordX = 600;
+    }
 
 
     let snowDown = new SnowDown();
@@ -97,7 +112,6 @@ function draw(){
     if (mouseIsPressed) {
         if (mouseX > width/2 - 250/2 && mouseX < width/2 + 250/2 &&
             mouseY > height/2 - 400/2 && mouseY < height/2 + 400/2) {
-            console.log("Drawing circle at: " + mouseX + ", " + mouseY);
             fill(penPicker.value());
             circle(mouseX, mouseY, sizeSlider.value());
         }
