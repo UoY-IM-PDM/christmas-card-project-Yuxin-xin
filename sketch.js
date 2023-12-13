@@ -29,6 +29,11 @@ let W = "Draw you own Christmas tree !";
 let wordX;
 let myFont,mySound;
 let penPicker,sizeSlider,clearButton;
+// NEW: Added variables to save the brush strokes
+let brushX = [];
+let brushY = [];
+let brushW = [];
+let brushColour = [];
 
 function preload(){
     bg1 = loadImage("assets/bg1.jpg");
@@ -60,7 +65,7 @@ function setup(){
 
     clearButton.size(width/8,30)
     clearButton.position(480,490);
-    clearButton.mousePressed(clear);
+    clearButton.mousePressed(clearDrawing);
     noStroke();
 }
 
@@ -112,9 +117,31 @@ function draw(){
     if (mouseIsPressed) {
         if (mouseX > width/2 - 250/2 && mouseX < width/2 + 250/2 &&
             mouseY > height/2 - 400/2 && mouseY < height/2 + 400/2) {
-            fill(penPicker.value());
-            circle(mouseX, mouseY, sizeSlider.value());
+            // EDITED: The circles are now drawn in the for loop after this if statement, using the new arrays
+            // fill(penPicker.value());
+            // circle(mouseX, mouseY, sizeSlider.value());
+            // NEW: Save the details of the brush stroke to draw on the canvas
+            brushX.push(mouseX);
+            brushY.push(mouseY);
+            brushW.push(sizeSlider.value());
+            brushColour.push(penPicker.value());
         }
     }
 
+    // NEW: Draw the saved brush strokes
+    for (let i = 0; i < brushX.length; i++) {
+        fill(brushColour[i]);
+        circle(brushX[i], brushY[i], brushW[i]);
+    }
+
+}
+
+/**
+ * NEW: This function will clear the drawing by making the arrays empty
+ */
+function clearDrawing() {
+    brushX = [];
+    brushY = [];
+    brushW = [];
+    brushColour = [];
 }
